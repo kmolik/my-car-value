@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Report } from '../entities/report.entity';
 import { User } from '../../users/entities/user.entity';
-import { GetEstimateDto } from "../dtos/get-estimate.dto";
+import { GetEstimateDto } from '../dtos/get-estimate.dto';
 
 @Injectable()
 export class ReportsService {
@@ -34,6 +34,7 @@ export class ReportsService {
       .andWhere('year - :year BETWEEN -3 AND 3', { year })
       .andWhere('lng - :lng BETWEEN -5 AND 5', { lng })
       .andWhere('lat - :lat BETWEEN -5 AND 5', { lat })
+      .andWhere('approved = true')
       .orderBy('ABS(mileage - : mileage)', 'ASC')
       .setParameters({ mileage })
       .limit(3)
